@@ -1,0 +1,6 @@
+*.py[co]
+*.egg*
+*.db
+*.log
+build
+.idea
