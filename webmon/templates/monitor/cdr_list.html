@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div id="vm-player"></div>
+  <div class="row">
+    <div class="col-md-8">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Абонент</th>
+            <th>Номер</th>
+            <th>Проигрыватель</th>
+            <th class="text-right">Длительность</th>
+            <th class="text-right">Дата</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>101</td>
+            <td>89610827173</td>
+            <td><button type="button" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-play"></i></button></td>
+            <td class="text-right">
+              <span class="text-muted"> 0:01 / </span> 2:54
+            </td>
+            <td class="text-right">18:04</td>
+          </tr>
+          <tr>
+            <td>101</td>
+            <td>89610827173</td>
+            <td><button type="button" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-play"></i></button></td>
+            <td class="text-right">
+              <span class="text-muted"> 0:01 / </span> 2:54
+            </td>
+            <td class="text-right">18:04</td>
+          </tr>
+          <tr>
+            <td>101</td>
+            <td>89610827173</td>
+            <td><button type="button" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-play"></i></button></td>
+            <td class="text-right">
+              <span class="text-muted"> 0:01 / </span> 2:54
+            </td>
+            <td class="text-right">18:04</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">Фильтры</div>
+        <div class="panel-body">
+          Basic panel example
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
