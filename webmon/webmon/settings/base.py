@@ -18,7 +18,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 # Database configuration
-DATABASES = {'default': dj_database_url.config()}
+#DATABASES = {'default': dj_database_url.config()}
 
 # General configuration
 TIME_ZONE = 'Europe/Moscow'
@@ -91,20 +91,20 @@ WSGI_APPLICATION = 'webmon.wsgi.application'
 # Apps configuration
 INSTALLED_APPS = (
     # django apps
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
+    #'django.contrib.auth',
+    #'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
+    #'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admin',
+    #'django.contrib.admin',
     # 'django.contrib.humanize',
 
     # 3rd party_apps
-    'south',
+    #'south',
 
     # webmon apps
-    'monitor'
+    # 'monitor'
 )
 
 # Logging configuration
