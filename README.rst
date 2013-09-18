@@ -33,6 +33,7 @@ Installation
 Create MySQL database, e.g. 'asterisk'. Then create following table for asterisk CDR:
 
 .. code-block:: sql
+
     CREATE TABLE \`cdr\` (
         \`_id\` int(10) unsigned NOT NULL AUTO_INCREMENT,
         \`clid\` varchar(80) NOT NULL DEFAULT '',
@@ -55,4 +56,5 @@ Create MySQL database, e.g. 'asterisk'. Then create following table for asterisk
         PRIMARY KEY (\`_id\`),
         KEY \`start\` (\`start\`),
     ) ENGINE=MyISAM CHARSET=utf8
+
 
