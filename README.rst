@@ -16,7 +16,7 @@ Requirements
 * Asterisk 1.8+
 * Python 2.7+
 
-All required python packages should be installed by `pip install -r requirements.txt`. You will need following:
+All required python packages should be installed by ``pip install -r requirements.txt``. You will need following:
 
 * Django 1.5+
 * MySQL-python
