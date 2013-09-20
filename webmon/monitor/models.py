@@ -48,6 +48,7 @@ class CallDataRecord(models.Model):
 
     class Meta:
         managed = False
+        db_table = 'cdr'
         ordering = ['-start']
 
     def save(self, force_insert=False, force_update=False, using=None,
