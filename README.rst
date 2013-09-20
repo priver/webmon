@@ -54,7 +54,7 @@ Create MySQL database, e.g. 'asterisk'. Then create following table for asterisk
         `accountcode` varchar(25) NOT NULL DEFAULT '',
         `uniqueid` varchar(32) NOT NULL,
         PRIMARY KEY (`_id`),
-        KEY `start` (`start`),
+        KEY `start` (`start`)
     ) ENGINE=MyISAM CHARSET=utf8
 
 
