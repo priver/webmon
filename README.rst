@@ -65,3 +65,15 @@ Configure Asterisk to store CDR in that table. Example configuration of cdr_adap
     connection=asterisk
     table=cdr
 
+Set environment variables::
+
+    PYTHONPATH=/path/to/repo_root/webmon
+    DJANGO_SETTINGS_MODULE=webmon.settings.production
+    SECRET_KEY=<django_secret_key>
+    DATABASE_URL=mysql://<user_name>:<password>@localhost:3306/<db_name>
+
+Run ``django-admin.py syncdb``
+
+Instructions on deploying Django project can be found here_.
+
+.. _here: https://docs.djangoproject.com/en/1.5/howto/deployment/
