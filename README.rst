@@ -57,4 +57,11 @@ Create MySQL database, e.g. 'asterisk'. Then create following table for asterisk
         KEY `start` (`start`)
     ) ENGINE=MyISAM CHARSET=utf8
 
+Configure Asterisk to store CDR in that table. Example configuration of cdr_adaptive_odbc.conf:
+
+.. code-block:: ini
+
+    [webmon]
+    connection=asterisk
+    table=cdr
 
