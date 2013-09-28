@@ -39,20 +39,14 @@ Create MySQL database, e.g. 'asterisk'. Then create following table for asterisk
         `clid` varchar(80) NOT NULL DEFAULT '',
         `src` varchar(30) NOT NULL DEFAULT '',
         `dst` varchar(30) NOT NULL DEFAULT '',
-        `dcontext` varchar(50) NOT NULL DEFAULT '',
-        `channel` varchar(60) NOT NULL DEFAULT '',
-        `dstchannel` varchar(60) NOT NULL DEFAULT '',
-        `lastapp` varchar(30) NOT NULL DEFAULT '',
-        `lastdata` varchar(80) NOT NULL DEFAULT '',
         `start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
         `answer` timestamp NULL DEFAULT NULL,
         `end` timestamp NULL DEFAULT NULL,
         `duration` double unsigned NOT NULL DEFAULT '0',
         `billsec` double unsigned NOT NULL DEFAULT '0',
         `disposition` int(3) unsigned NOT NULL DEFAULT '0',
-        `amaflags` int(3) unsigned NOT NULL DEFAULT '0',
-        `accountcode` varchar(25) NOT NULL DEFAULT '',
         `uniqueid` varchar(32) NOT NULL,
+        `recordingfile` varchar(255) NOT NULL DEFAULT '',
         PRIMARY KEY (`_id`),
         KEY `start` (`start`)
     ) ENGINE=MyISAM CHARSET=utf8
@@ -64,6 +58,27 @@ Configure Asterisk to store CDR in that table. Example configuration of cdr_adap
     [webmon]
     connection=asterisk
     table=cdr
+
+You also need to set path to recording file in Asterisk's dial plan::
+
+    Set(CDR(recordingfile)=<path>)
+
+Add callback to ``MixMonitor`` application to convert recordings to mp3 and ogg::
+
+    Set(MIXMON_POST = /usr/local/scripts/convert_recording.sh ^{MIXMON_DIR}^{YEAR}/^{MONTH}/^{DAY}/^{CALLFILENAME}.^{MIXMON_FORMAT} > /dev/null 2>&1)
+    MixMonitor(${MIXMON_DIR}${YEAR}/${MONTH}/${DAY}/${CALLFILENAME}.${MIXMON_FORMAT},,${MIXMON_POST})
+
+Example of convert_recording.sh:
+
+.. code-block:: bash
+
+    #! /bin/bash
+
+    FILENAME=$1
+    BASENAME="${FILENAME%.*}"
+
+    /usr/bin/lame --cbr --resample 11.025 ${FILENAME} ${BASENAME}.mp3
+    /usr/bin/oggenc ${FILENAME} -o ${BASENAME}.ogg
 
 Set environment variables::
 
