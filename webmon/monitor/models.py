@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import datetime
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from model_utils import Choices
@@ -36,3 +38,12 @@ class CallDataRecord(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         raise NotImplementedError
+
+    def duration_timedelta(self):
+        return str(datetime.timedelta(seconds=int(self.duration)))
+
+    def billing_seconds_timedelta(self):
+        return str(datetime.timedelta(seconds=int(self.billing_seconds)))
+
+    def is_answered(self):
+        return self.disposition == self.DISPOSITION.answered

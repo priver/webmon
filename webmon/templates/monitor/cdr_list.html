@@ -15,33 +15,23 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>101</td>
-            <td>89610827173</td>
-            <td><button type="button" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-play"></i></button></td>
-            <td class="text-right">
-              <span class="text-muted"> 0:01 / </span> 2:54
-            </td>
-            <td class="text-right">18:04</td>
-          </tr>
-          <tr>
-            <td>101</td>
-            <td>89610827173</td>
-            <td><button type="button" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-play"></i></button></td>
-            <td class="text-right">
-              <span class="text-muted"> 0:01 / </span> 2:54
-            </td>
-            <td class="text-right">18:04</td>
-          </tr>
-          <tr>
-            <td>101</td>
-            <td>89610827173</td>
-            <td><button type="button" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-play"></i></button></td>
-            <td class="text-right">
-              <span class="text-muted"> 0:01 / </span> 2:54
-            </td>
-            <td class="text-right">18:04</td>
-          </tr>
+          {% for cdr in call_data_records %}
+            <tr>
+              <td>{{ cdr.source }}</td>
+              <td>{{ cdr.destination }}</td>
+              <td>
+                {% if cdr.is_answered %}
+                  <button type="button" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-play"></i></button>
+                {% else %}
+                  <span class="label label-default">{{ cdr.get_disposition_display }}</span>
+                {% endif %}
+              </td>
+              <td class="text-right">
+                <span class="text-muted"> 0:01 / </span> {{ cdr.billing_seconds_timedelta }}
+              </td>
+              <td class="text-right">{{ cdr.start|date:"j b, G:i" }}</td>
+            </tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
