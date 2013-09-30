@@ -39,11 +39,14 @@ class CallDataRecord(models.Model):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         raise NotImplementedError
 
-    def duration_timedelta(self):
+    def get_duration_timedelta(self):
         return str(datetime.timedelta(seconds=int(self.duration)))
 
-    def billing_seconds_timedelta(self):
+    def get_billing_seconds_timedelta(self):
         return str(datetime.timedelta(seconds=int(self.billing_seconds)))
 
     def is_answered(self):
         return self.disposition == self.DISPOSITION.answered
+
+    def get_media_path(self):
+        return u'/files/{0:%Y/%m/%d}/{1}'.format(self.start, self.recording_file[:-4])

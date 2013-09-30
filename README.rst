@@ -24,6 +24,7 @@ All required python packages should be installed by ``pip install -r requirement
 * Unipath
 * dj-database-url
 * django-braces
+* django-filter
 * django-model-utils
 
 

@@ -1,0 +1,27 @@
+{% if is_paginated %}
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li><a href="?{{ get_query }}page={{ page_obj.previous_page_number }}">«</a></li>
+    {% else %}
+      <li class="disabled"><span>«</span></li>
+    {% endif %}
+    {% if dots_left %}
+      <li><span>…</span></li>
+    {% endif %}
+    {% for p in page_range %}
+      {% if p != page_obj.number %}
+        <li><a href="?{{ get_query }}page={{ p }}">{{ p }}</a></li>
+      {% else %}
+        <li class="active"><span>{{ p }}</span></li>
+      {% endif %}
+    {% endfor %}
+    {% if dots_right %}
+      <li><span>…</span></li>
+    {% endif %}
+    {% if page_obj.has_next %}
+      <li><a href="?{{ get_query }}page={{ page_obj.next_page_number }}">»</a></li>
+    {% else %}
+      <li class="disabled"><span>»</span></li>
+    {% endif %}
+  </ul>
+{% endif %}

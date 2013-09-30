@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+{% load staticfiles monitor_tags %}
 
 {% block content %}
-  <div id="vm-player"></div>
+  <div id="player"></div>
   <div class="row">
-    <div class="col-md-8">
+    <div id='cdrList' class="col-md-8">
       <table class="table table-hover">
         <thead>
           <tr>
@@ -21,27 +22,54 @@
               <td>{{ cdr.destination }}</td>
               <td>
                 {% if cdr.is_answered %}
-                  <button type="button" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-play"></i></button>
+                  <button class="btn btn-primary btn-xs player-start"
+                          data-oga="{{ cdr.get_media_path }}.ogg"
+                          data-mp3="{{ cdr.get_media_path }}.mp3">
+                    <i class="glyphicon glyphicon-play"></i>
+                  </button>
+                  <div class="player-control hide">
+                    <a href="#" class="btn btn-primary btn-xs jp-play">
+                      <i class="glyphicon glyphicon-play"></i>
+                    </a>
+                    <a href="#" class="btn btn-primary btn-xs jp-pause">
+                      <i class="glyphicon glyphicon-pause"></i>
+                    </a>
+                    <a href="#" class="btn btn-primary btn-xs jp-stop">
+                      <i class="glyphicon glyphicon-stop"></i>
+                    </a>
+                  </div>
                 {% else %}
                   <span class="label label-default">{{ cdr.get_disposition_display }}</span>
                 {% endif %}
               </td>
               <td class="text-right">
-                <span class="text-muted"> 0:01 / </span> {{ cdr.billing_seconds_timedelta }}
+                <span class="player-time text-muted hide">
+                  <span class="jp-current-time"></span> /
+                </span>
+                {{ cdr.get_billing_seconds_timedelta }}
               </td>
               <td class="text-right">{{ cdr.start|date:"j b, G:i" }}</td>
             </tr>
           {% endfor %}
         </tbody>
       </table>
+      {% bootstrap_pagination %}
     </div>
     <div class="col-md-4">
       <div class="panel panel-default">
         <div class="panel-heading">Фильтры</div>
         <div class="panel-body">
-          Basic panel example
+          <form action="" method="get">
+            {{ filter.form.as_p }}
+            <input type="submit" />
+          </form>
         </div>
       </div>
     </div>
   </div>
 {% endblock content %}
+
+{% block extra_js %}
+  <script src="{% static 'js/lib/jquery.jplayer.min.js' %}"></script>
+  <script src="{% static 'js/player.js' %}"></script>
+{% endblock extra_js %}
