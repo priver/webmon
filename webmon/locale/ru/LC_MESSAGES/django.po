@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webmon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-02 01:01+0400\n"
+"POT-Creation-Date: 2013-10-02 01:36+0400\n"
 "PO-Revision-Date: 2013-10-01 22:52+0400\n"
 "Last-Translator: Mikhail Priver <mikhail@priver.org>\n"
 "Language-Team: Russian <mikhail@priver.org>\n"
@@ -27,27 +27,27 @@ msgstr "Конец периода"
 msgid "Destination"
 msgstr "Назначение"
 
-#: .\monitor\models.py:12 .\templates\monitor\cdr_list.html.py:84
+#: .\monitor\models.py:12 .\templates\monitor\cdr_list.html.py:90
 msgid "no answer"
 msgstr "без ответа"
 
-#: .\monitor\models.py:13 .\templates\monitor\cdr_list.html.py:89
+#: .\monitor\models.py:13 .\templates\monitor\cdr_list.html.py:95
 msgid "null"
 msgstr "неизвестно"
 
-#: .\monitor\models.py:14 .\templates\monitor\cdr_list.html.py:94
+#: .\monitor\models.py:14 .\templates\monitor\cdr_list.html.py:100
 msgid "failed"
 msgstr "ошибка"
 
-#: .\monitor\models.py:15 .\templates\monitor\cdr_list.html.py:99
+#: .\monitor\models.py:15 .\templates\monitor\cdr_list.html.py:105
 msgid "busy"
 msgstr "занято"
 
-#: .\monitor\models.py:16 .\templates\monitor\cdr_list.html.py:104
+#: .\monitor\models.py:16 .\templates\monitor\cdr_list.html.py:110
 msgid "answered"
 msgstr "отвечено"
 
-#: .\monitor\models.py:17 .\templates\monitor\cdr_list.html.py:109
+#: .\monitor\models.py:17 .\templates\monitor\cdr_list.html.py:115
 msgid "congestion"
 msgstr "перегрузка"
 
@@ -132,21 +132,26 @@ msgid "Source"
 msgstr "От"
 
 #: .\templates\monitor\cdr_list.html.py:13
+#: .\templates\monitor\cdr_list.html.py:87
+msgid "Disposition"
+msgstr "Статус"
+
+#: .\templates\monitor\cdr_list.html.py:14
 msgid "Player"
 msgstr "Проигрыватель"
 
-#: .\templates\monitor\cdr_list.html.py:14
+#: .\templates\monitor\cdr_list.html.py:15
 msgid "Duration"
 msgstr "Длительность"
 
-#: .\templates\monitor\cdr_list.html.py:15
+#: .\templates\monitor\cdr_list.html.py:16
 msgid "Date"
 msgstr "Дата"
 
-#: .\templates\monitor\cdr_list.html.py:62
+#: .\templates\monitor\cdr_list.html.py:68
 msgid "Filters"
 msgstr "Фильтры"
 
-#: .\templates\monitor\cdr_list.html.py:81
-msgid "Disposition"
-msgstr "Статус"
+#: .\templates\monitor\cdr_list.html.py:118
+msgid "Apply"
+msgstr "Применить"

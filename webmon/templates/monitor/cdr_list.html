@@ -70,52 +70,52 @@
           <form action="" method="get" role="form">
             <div class="form-group">
               {{ filter.form.start_from.label_tag }}
-              <input type="text" class="form-control" id="id_start_from" name="start_from" type="text">
+              <input type="text" class="form-control" id="id_start_from" name="start_from" type="text" value="{{ filter.form.start_from.value|default_if_none:"" }}">
             </div>
             <div class="form-group">
               {{ filter.form.start_to.label_tag }}
-              <input type="text" class="form-control" id="id_start_to" name="start_to" type="text">
+              <input type="text" class="form-control" id="id_start_to" name="start_to" type="text" value="{{ filter.form.start_to.value|default_if_none:"" }}">
             </div>
             <div class="form-group">
               {{ filter.form.source.label_tag }}
-              <input type="text" class="form-control" id="id_source" name="source" type="text">
+              <input type="text" class="form-control" id="id_source" name="source" type="text" value="{{ filter.form.source.value|default_if_none:"" }}">
             </div>
             <div class="form-group">
               {{ filter.form.destination.label_tag }}
-              <input type="text" class="form-control" id="id_destination" name="destination" type="text">
+              <input type="text" class="form-control" id="id_destination" name="destination" type="text" value="{{ filter.form.destination.value|default_if_none:"" }}">
             </div>
             <label>{% trans 'Disposition' %}</label>
             <div class="checkbox">
               <label>
-                <input type="checkbox" value="0" id="id_disposition_0" name="disposition"> {% trans 'no answer' %}
+                <input type="checkbox" value="0" id="id_disposition_0" name="disposition"{% if '0' in filter.form.disposition.value %} checked{% endif %}> {% trans 'no answer' %}
               </label>
             </div>
             <div class="checkbox">
               <label>
-                <input type="checkbox" value="1" id="id_disposition_1" name="disposition"> {% trans 'null' %}
+                <input type="checkbox" value="1" id="id_disposition_1" name="disposition"{% if '1' in filter.form.disposition.value %} checked{% endif %}> {% trans 'null' %}
               </label>
             </div>
             <div class="checkbox">
               <label>
-                <input type="checkbox" value="2" id="id_disposition_2" name="disposition"> {% trans 'failed' %}
+                <input type="checkbox" value="2" id="id_disposition_2" name="disposition"{% if '2' in filter.form.disposition.value %} checked{% endif %}> {% trans 'failed' %}
               </label>
             </div>
             <div class="checkbox">
               <label>
-                <input type="checkbox" value="4" id="id_disposition_3" name="disposition"> {% trans 'busy' %}
+                <input type="checkbox" value="4" id="id_disposition_3" name="disposition"{% if '4' in filter.form.disposition.value %} checked{% endif %}> {% trans 'busy' %}
               </label>
             </div>
             <div class="checkbox">
               <label>
-                <input type="checkbox" value="8" id="id_disposition_4" name="disposition"> {% trans 'answered' %}
+                <input type="checkbox" value="8" id="id_disposition_4" name="disposition"{% if '8' in filter.form.disposition.value %} checked{% endif %}> {% trans 'answered' %}
               </label>
             </div>
             <div class="checkbox">
               <label>
-                <input type="checkbox" value="16" id="id_disposition_5" name="disposition"> {% trans 'congestion' %}
+                <input type="checkbox" value="16" id="id_disposition_5" name="disposition"{% if '16' in filter.form.disposition.value %} checked{% endif %}> {% trans 'congestion' %}
               </label>
             </div>
-            <input type="submit">
+            <button type="submit" class="btn btn-primary">{% trans 'Apply' %}</button>
           </form>
         </div>
       </div>
