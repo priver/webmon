@@ -9,6 +9,7 @@ $(document).ready(function () {
             $nowPlaying.parent().next().find('.player-time').addClass('hide');
             $nowPlaying.removeClass('hide');
         },
+        swfPath: '/static/js/lib/Jplayer.swf',
         cssSelectorAncestor: '#cdrList',
         supplied: 'oga, mp3',
         wmode: 'window',
