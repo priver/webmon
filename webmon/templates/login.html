@@ -8,7 +8,7 @@
         <div class="panel-heading">{% trans 'Sign in' %}</div>
         <div class="panel-body">
           {% if form.errors %}
-            <p>Your username and password didn't match. Please try again.</p>
+            <div class="alert alert-warning">{% trans "Your username and password didn't match. Please try again." %}</div>
           {% endif %}
           <form method="post" action="" role="form">{% csrf_token %}
             <div class="form-group">
@@ -19,7 +19,7 @@
               {{ form.password.label_tag }}
               <input type="password" class="form-control" id="id_password" maxlength="4096" name="password">
             </div>
-            <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+            <button class="btn btn-primary btn-block" type="submit">{% trans 'Sign in' %}</button>
             <input type="hidden" name="next" value="{{ next }}">
           </form>
         </div>

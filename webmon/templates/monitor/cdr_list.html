@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load staticfiles monitor_tags %}
+{% load i18n staticfiles monitor_tags %}
 
 {% block content %}
   <div id="player"></div>
@@ -8,11 +8,11 @@
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>Абонент</th>
-            <th>Номер</th>
-            <th>Проигрыватель</th>
-            <th class="text-right">Длительность</th>
-            <th class="text-right">Дата</th>
+            <th>{% trans 'Source' %}</th>
+            <th>{% trans 'Destination' %}</th>
+            <th>{% trans 'Player' %}</th>
+            <th class="text-right">{% trans 'Duration' %}</th>
+            <th class="text-right">{% trans 'Date' %}</th>
           </tr>
         </thead>
         <tbody>
@@ -59,7 +59,7 @@
     </div>
     <div class="col-md-4">
       <div class="panel panel-default">
-        <div class="panel-heading">Фильтры</div>
+        <div class="panel-heading">{% trans 'Filters' %}</div>
         <div class="panel-body">
           <form action="" method="get">
             {{ filter.form.as_p }}

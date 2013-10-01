@@ -20,6 +20,7 @@ class Migration(SchemaMigration):
             'answer': ('django.db.models.fields.DateTimeField', [], {}),
             'billing_seconds': ('django.db.models.fields.FloatField', [], {'db_column': "'billsec'"}),
             'caller_id': ('django.db.models.fields.CharField', [], {'max_length': '80', 'db_column': "'clid'"}),
+            'context': ('django.db.models.fields.CharField', [], {'max_length': '50', 'db_column': "'dcontext'"}),
             'destination': ('django.db.models.fields.CharField', [], {'max_length': '30', 'db_column': "'dst'"}),
             'disposition': ('django.db.models.fields.PositiveIntegerField', [], {}),
             'duration': ('django.db.models.fields.FloatField', [], {}),

@@ -21,6 +21,7 @@ class CallDataRecord(models.Model):
     caller_id = models.CharField(max_length=80, db_column='clid', verbose_name=_('CallerId'))
     source = models.CharField(max_length=30, db_column='src', verbose_name=_('source'))
     destination = models.CharField(max_length=30, db_column='dst', verbose_name=_('destination'))
+    context = models.CharField(max_length=50, db_column='dcontext', verbose_name=_('context'))
     start = models.DateTimeField(verbose_name=_('start'))
     answer = models.DateTimeField(verbose_name=_('answer'))
     end = models.DateTimeField(verbose_name=_('end'))

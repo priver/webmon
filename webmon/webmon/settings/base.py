@@ -28,7 +28,7 @@ LOGIN_REDIRECT_URL = 'cdr_list'
 
 # General configuration
 TIME_ZONE = 'Europe/Moscow'
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = 'ru'
 SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
