@@ -4,12 +4,13 @@
 {% block content %}
   <div id="player"></div>
   <div class="row">
-    <div id='cdrList' class="col-md-8">
+    <div id='cdrList' class="col-md-10">
       <table class="table table-hover">
         <thead>
           <tr>
             <th>{% trans 'Source' %}</th>
             <th>{% trans 'Destination' %}</th>
+            <th>{% trans 'Disposition' %}</th>
             <th>{% trans 'Player' %}</th>
             <th class="text-right">{% trans 'Duration' %}</th>
             <th class="text-right">{% trans 'Date' %}</th>
@@ -19,30 +20,35 @@
           {% for cdr in call_data_records %}
             <tr>
               <td>{{ cdr.source }}</td>
-              <td>{{ cdr.destination }}</td>
               <td>
-                {% if cdr.is_answered %}
-                  <button class="btn btn-primary btn-xs player-start"
-                          data-oga="{{ cdr.get_media_path }}.ogg"
-                          data-mp3="{{ cdr.get_media_path }}.mp3">
-                    <i class="glyphicon glyphicon-play"></i>
-                  </button>
-                  <div class="player-control hide">
-                    <a href="#" class="btn btn-primary btn-xs jp-play">
-                      <i class="glyphicon glyphicon-play"></i>
-                    </a>
-                    <a href="#" class="btn btn-primary btn-xs jp-pause">
-                      <i class="glyphicon glyphicon-pause"></i>
-                    </a>
-                    <a href="#" class="btn btn-primary btn-xs jp-stop">
-                      <i class="glyphicon glyphicon-stop"></i>
-                    </a>
-                  </div>
-                  <a href="{{ cdr.get_media_path }}.mp3" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-download"></i> mp3</a>
-                  <a href="{{ cdr.get_media_path }}.ogg" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-download"></i> ogg</a>
-                {% else %}
+                {{ cdr.destination }}
+              </td>
+              <td>
+                {% if not cdr.is_answered %}
                   <span class="label label-default">{{ cdr.get_disposition_display }}</span>
                 {% endif %}
+              </td>
+              <td>
+                <button class="btn btn-primary btn-xs player-start"
+                        data-oga="{{ cdr.get_media_path }}.ogg"
+                        data-mp3="{{ cdr.get_media_path }}.mp3">
+                  <i class="glyphicon glyphicon-play"></i>
+                </button>
+                <div class="player-control hide" style="display: inline">
+                  <a href="#" class="btn btn-primary btn-xs jp-play">
+                    <i class="glyphicon glyphicon-play"></i>
+                  </a>
+                  <a href="#" class="btn btn-primary btn-xs jp-pause">
+                    <i class="glyphicon glyphicon-pause"></i>
+                  </a>
+                  <a href="#" class="btn btn-primary btn-xs jp-stop">
+                    <i class="glyphicon glyphicon-stop"></i>
+                  </a>
+                </div>
+                <span class="pull-right">
+                  <a href="{{ cdr.get_media_path }}.mp3" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-download"></i> mp3</a>
+                  <a href="{{ cdr.get_media_path }}.ogg" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-download"></i> ogg</a>
+                </span>
               </td>
               <td class="text-right">
                 <span class="player-time text-muted hide">
@@ -57,13 +63,59 @@
       </table>
       {% bootstrap_pagination %}
     </div>
-    <div class="col-md-4">
+    <div class="col-md-2">
       <div class="panel panel-default">
         <div class="panel-heading">{% trans 'Filters' %}</div>
         <div class="panel-body">
-          <form action="" method="get">
-            {{ filter.form.as_p }}
-            <input type="submit" />
+          <form action="" method="get" role="form">
+            <div class="form-group">
+              {{ filter.form.start_from.label_tag }}
+              <input type="text" class="form-control" id="id_start_from" name="start_from" type="text">
+            </div>
+            <div class="form-group">
+              {{ filter.form.start_to.label_tag }}
+              <input type="text" class="form-control" id="id_start_to" name="start_to" type="text">
+            </div>
+            <div class="form-group">
+              {{ filter.form.source.label_tag }}
+              <input type="text" class="form-control" id="id_source" name="source" type="text">
+            </div>
+            <div class="form-group">
+              {{ filter.form.destination.label_tag }}
+              <input type="text" class="form-control" id="id_destination" name="destination" type="text">
+            </div>
+            <label>{% trans 'Disposition' %}</label>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="0" id="id_disposition_0" name="disposition"> {% trans 'no answer' %}
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="1" id="id_disposition_1" name="disposition"> {% trans 'null' %}
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="2" id="id_disposition_2" name="disposition"> {% trans 'failed' %}
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="4" id="id_disposition_3" name="disposition"> {% trans 'busy' %}
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="8" id="id_disposition_4" name="disposition"> {% trans 'answered' %}
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="16" id="id_disposition_5" name="disposition"> {% trans 'congestion' %}
+              </label>
+            </div>
+            <input type="submit">
           </form>
         </div>
       </div>

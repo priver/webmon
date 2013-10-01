@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webmon\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-01 23:18+0400\n"
+"POT-Creation-Date: 2013-10-02 01:01+0400\n"
 "PO-Revision-Date: 2013-10-01 22:52+0400\n"
 "Last-Translator: Mikhail Priver <mikhail@priver.org>\n"
 "Language-Team: Russian <mikhail@priver.org>\n"
@@ -15,27 +15,39 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: .\monitor\models.py:12
+#: .\monitor\filters.py:10
+msgid "From"
+msgstr "Начало периода"
+
+#: .\monitor\filters.py:11
+msgid "To"
+msgstr "Конец периода"
+
+#: .\monitor\filters.py:12 .\templates\monitor\cdr_list.html.py:12
+msgid "Destination"
+msgstr "Назначение"
+
+#: .\monitor\models.py:12 .\templates\monitor\cdr_list.html.py:84
 msgid "no answer"
 msgstr "без ответа"
 
-#: .\monitor\models.py:13
+#: .\monitor\models.py:13 .\templates\monitor\cdr_list.html.py:89
 msgid "null"
-msgstr "без ответа"
+msgstr "неизвестно"
 
-#: .\monitor\models.py:14
+#: .\monitor\models.py:14 .\templates\monitor\cdr_list.html.py:94
 msgid "failed"
 msgstr "ошибка"
 
-#: .\monitor\models.py:15
+#: .\monitor\models.py:15 .\templates\monitor\cdr_list.html.py:99
 msgid "busy"
 msgstr "занято"
 
-#: .\monitor\models.py:16
+#: .\monitor\models.py:16 .\templates\monitor\cdr_list.html.py:104
 msgid "answered"
 msgstr "отвечено"
 
-#: .\monitor\models.py:17
+#: .\monitor\models.py:17 .\templates\monitor\cdr_list.html.py:109
 msgid "congestion"
 msgstr "перегрузка"
 
@@ -119,10 +131,6 @@ msgstr "Пожалуйста, проверьте правильность нап
 msgid "Source"
 msgstr "От"
 
-#: .\templates\monitor\cdr_list.html.py:12
-msgid "Destination"
-msgstr "Назначение"
-
 #: .\templates\monitor\cdr_list.html.py:13
 msgid "Player"
 msgstr "Проигрыватель"
@@ -138,3 +146,7 @@ msgstr "Дата"
 #: .\templates\monitor\cdr_list.html.py:62
 msgid "Filters"
 msgstr "Фильтры"
+
+#: .\templates\monitor\cdr_list.html.py:81
+msgid "Disposition"
+msgstr "Статус"
