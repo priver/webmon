@@ -23,11 +23,7 @@
               <td>
                 {{ cdr.destination }}
               </td>
-              <td>
-                {% if not cdr.is_answered %}
-                  <span class="label label-default">{{ cdr.get_disposition_display }}</span>
-                {% endif %}
-              </td>
+              <td><span class="label label-{% if cdr.is_answered %}success{% else %}danger{% endif %}">{{ cdr.get_disposition_display }}</span></td>
               <td>
                 <button class="btn btn-primary btn-xs player-start"
                         data-oga="{{ cdr.get_media_path }}.ogg"
