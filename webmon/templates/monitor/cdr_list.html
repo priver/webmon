@@ -38,6 +38,8 @@
                       <i class="glyphicon glyphicon-stop"></i>
                     </a>
                   </div>
+                  <a href="{{ cdr.get_media_path }}.mp3" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-download"></i> mp3</a>
+                  <a href="{{ cdr.get_media_path }}.ogg" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-download"></i> ogg</a>
                 {% else %}
                   <span class="label label-default">{{ cdr.get_disposition_display }}</span>
                 {% endif %}
@@ -46,7 +48,7 @@
                 <span class="player-time text-muted hide">
                   <span class="jp-current-time"></span> /
                 </span>
-                {{ cdr.get_billing_seconds_timedelta }}
+                {{ cdr.get_duration_timedelta }}
               </td>
               <td class="text-right">{{ cdr.start|date:"j b, G:i" }}</td>
             </tr>
