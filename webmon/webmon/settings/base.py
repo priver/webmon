@@ -20,6 +20,12 @@ MANAGERS = ADMINS
 # Database configuration
 DATABASES = {'default': dj_database_url.config()}
 
+# Auth configuration
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'cdr_list'
+
+
 # General configuration
 TIME_ZONE = 'Europe/Moscow'
 LANGUAGE_CODE = 'ru-ru'

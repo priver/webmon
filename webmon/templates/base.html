@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load i18n staticfiles %}
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -39,10 +39,12 @@
           <a class="navbar-brand" href="#">WebMonitor</a>
         </div>
         <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Журнал вызовов</a></li>
-          </ul>
-          <p class="navbar-text navbar-right">Signed in as Mark Otto. <a href="#">Выйти</a></p>
+          {% if user.is_authenticated %}
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Журнал вызовов</a></li>
+            </ul>
+            <p class="navbar-text navbar-right">{% trans 'Signed in as' %} {{ user.username }}. <a href="{% url 'logout' %}">{% trans 'Sign out' %}</a></p>
+          {% endif %}
         </div>
       </div>
     </header>
