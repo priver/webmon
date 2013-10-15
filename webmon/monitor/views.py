@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-from braces.views import LoginRequiredMixin
+import asterisk.manager
+from braces.views import LoginRequiredMixin, JSONResponseMixin
+from django.views.generic import View
 from django_filters.views import FilterView
 
 from .filters import CallDataRecordFilter
@@ -14,3 +16,22 @@ class CallDataRecordListView(LoginRequiredMixin, FilterView):
 
     def get_queryset(self):
         return CallDataRecord.objects.filter(context='from-internal')
+
+
+class Originate(View, JSONResponseMixin):
+    def post(self, request):
+        try:
+            login = request.GET['login']
+            password = request.GET['password']
+            channel = 'SIP/{0}'.format(request.GET['channel'])
+            extension = request.GET['extension']
+        except KeyError:
+            return self.render_json_response({'success': False,  'error': 'Invalid parameters'})
+        else:
+            manager = asterisk.manager.Manager()
+            manager.connect('127.0.0.1')
+            manager.login(login, password)
+            response = manager.originate(channel, extension, 'from-internal', 1, async=True)
+            manager.logoff()
+            manager.close()
+            return self.render_json_response({'success': True, 'response': response})

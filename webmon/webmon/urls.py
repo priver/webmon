@@ -9,6 +9,7 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     url(r'^$', views.CallDataRecordListView.as_view(), name='cdr_list'),
+    url(r'^originate/$', views.Originate.as_view(), name='originate'),
     url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'},
         name='login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),
