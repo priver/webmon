@@ -21,10 +21,10 @@ class CallDataRecordListView(LoginRequiredMixin, FilterView):
 class Originate(View, JSONResponseMixin):
     def post(self, request):
         try:
-            login = request.GET['login']
-            password = request.GET['password']
-            channel = 'SIP/{0}'.format(request.GET['channel'])
-            extension = request.GET['extension']
+            login = request.POST['login']
+            password = request.POST['password']
+            channel = 'SIP/{0}'.format(request.POST['channel'])
+            extension = request.POST['extension']
         except KeyError:
             return self.render_json_response({'success': False,  'error': 'Invalid parameters'})
         else:
