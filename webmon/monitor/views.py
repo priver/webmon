@@ -5,7 +5,7 @@ from django.views.generic import View
 from django_filters.views import FilterView
 
 from .filters import CallDataRecordFilter
-from .models import CallDataRecord
+from .models import CallDataRecord, ExternalCall
 
 
 class CallDataRecordListView(LoginRequiredMixin, FilterView):
@@ -34,7 +34,20 @@ class Originate(CsrfExemptMixin, View, JSONResponseMixin):
             event = manager.originate(channel, extension, 'from-internal', 1, async=True)
             manager.logoff()
             manager.close()
-            return self.render_json_response({
-                'success': event.has_header('Response') and event['Response'] == 'Success',
-                'message': event.get_header('Message', '')
-            })
+            if event.has_header('Response') and event['Response'] == 'Success':
+                call, created = ExternalCall.objects.get_or_create(
+                    channel=channel, defaults={'extension': extension})
+                if not created:
+                    call.extension = extension
+                    call.unique_id = ''
+                    call.status = ExternalCall.STATUS.originate
+                    call.save()
+                return self.render_json_response({
+                    'success': True,
+                    'message': event.get_header('Message', ''),
+                })
+            else:
+                return self.render_json_response({
+                    'success': False,
+                    'message': event.get_header('Message', ''),
+                })
