@@ -4,6 +4,7 @@ import datetime
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from model_utils import Choices
+from model_utils.fields import StatusField
 
 
 class CallDataRecord(models.Model):
@@ -51,3 +52,23 @@ class CallDataRecord(models.Model):
 
     def get_media_path(self):
         return u'/files/{0:%Y/%m/%d}/{1}'.format(self.start, self.recording_file[:-4])
+
+
+class ExternalCall(models.Model):
+    """A call originated from external app."""
+    STATUS = Choices(
+        (0, 'originate', _('originate')),
+        (1, 'bridge', _('bridge')),
+        (2, 'hangup', _('hangup')),
+    )
+
+    channel = models.CharField(max_length=10, unique=True, verbose_name=_('channel'))
+    extension = models.CharField(max_length=20, verbose_name=_('extension'))
+    unique_id = models.CharField(max_length=32, verbose_name=_('uniqueid'))
+    status = models.IntegerField(choices=STATUS, default=STATUS.originate,
+                                 verbose_name=_('status'))
+
+    class Meta:
+        verbose_name = _('external call')
+        verbose_name_plural = _('external calls')
+
