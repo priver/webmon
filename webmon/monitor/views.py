@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import asterisk.manager
-from braces.views import LoginRequiredMixin, JSONResponseMixin
+from braces.views import LoginRequiredMixin, JSONResponseMixin, CsrfExemptMixin
 from django.views.generic import View
 from django_filters.views import FilterView
 
@@ -18,7 +18,7 @@ class CallDataRecordListView(LoginRequiredMixin, FilterView):
         return CallDataRecord.objects.filter(context='from-internal')
 
 
-class Originate(View, JSONResponseMixin):
+class Originate(CsrfExemptMixin, View, JSONResponseMixin):
     def post(self, request):
         try:
             login = request.POST['login']
@@ -26,12 +26,15 @@ class Originate(View, JSONResponseMixin):
             channel = 'SIP/{0}'.format(request.POST['channel'])
             extension = request.POST['extension']
         except KeyError:
-            return self.render_json_response({'success': False,  'error': 'Invalid parameters'})
+            return self.render_json_response({'success': False,  'message': 'Invalid parameters'})
         else:
             manager = asterisk.manager.Manager()
             manager.connect('127.0.0.1')
             manager.login(login, password)
-            response = manager.originate(channel, extension, 'from-internal', 1, async=True)
+            event = manager.originate(channel, extension, 'from-internal', 1, async=True)
             manager.logoff()
             manager.close()
-            return self.render_json_response({'success': True, 'response': response})
+            return self.render_json_response({
+                'success': event.has_header('Response') and event['Response'] == 'Success',
+                'message': event.get_header('Message', '')
+            })
