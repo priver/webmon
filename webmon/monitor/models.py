@@ -64,7 +64,7 @@ class ExternalCall(models.Model):
 
     channel = models.CharField(max_length=10, unique=True, verbose_name=_('channel'))
     extension = models.CharField(max_length=20, verbose_name=_('extension'))
-    unique_id = models.CharField(max_length=32, verbose_name=_('uniqueid'))
+    unique_id = models.CharField(max_length=32, blank=True, verbose_name=_('uniqueid'))
     status = models.IntegerField(choices=STATUS, default=STATUS.originate,
                                  verbose_name=_('status'))
 
