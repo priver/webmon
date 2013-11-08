@@ -38,6 +38,7 @@ LOCALE_PATHS = (BASE_DIR.child('locale'), )
 # Media configuration
 MEDIA_ROOT = BASE_DIR.child('media')
 MEDIA_URL = '/media/'
+MONITOR_ROOT = 'D:\\temp'
 
 # Static file configuration
 STATIC_ROOT = BASE_DIR.child('assets')

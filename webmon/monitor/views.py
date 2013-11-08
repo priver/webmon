@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
+from StringIO import StringIO
+from zipfile import ZipFile
+
 import asterisk.manager
 from braces.views import LoginRequiredMixin, JSONResponseMixin, CsrfExemptMixin
+from django.http import HttpResponse, Http404
 from django.views.generic import View
-from django_filters.views import FilterView
+from django_filters.views import FilterView, BaseFilterView
 
 from .filters import CallDataRecordFilter
 from .models import CallDataRecord, ExternalCall
@@ -12,10 +16,49 @@ class CallDataRecordListView(LoginRequiredMixin, FilterView):
     filterset_class = CallDataRecordFilter
     context_object_name = 'call_data_records'
     template_name = 'monitor/cdr_list.html'
-    paginate_by = 50
+    paginate_by = 100
 
     def get_queryset(self):
         return CallDataRecord.objects.filter(context='from-internal')
+
+
+class BaseDownloadView(LoginRequiredMixin, BaseFilterView):
+    filterset_class = CallDataRecordFilter
+    recording_ext = '.wav'
+    context_object_name = 'call_data_records'
+    paginate_by = 100
+
+    def get_queryset(self):
+        return CallDataRecord.objects.filter(context='from-internal')
+
+    def get(self, request, *args, **kwargs):
+        filterset = self.get_filterset(self.get_filterset_class())
+        object_list = filterset.qs
+        context = self.get_context_data(object_list=object_list)
+        if context['call_data_records'].exists():
+            f = StringIO()
+            with ZipFile(f, 'w') as zipfile:
+                for cdr in context['call_data_records']:
+                    zipfile.write(cdr.get_media_path() + self.recording_ext,
+                                  cdr.recording_file[:-4] + self.recording_ext)
+
+            response = HttpResponse(mimetype='application/zip')
+            response['Content-Disposition'] = 'attachment; filename=recordings.zip'
+
+            f.seek(0)
+            response.write(f.read())
+
+            return response
+        else:
+            raise Http404
+
+
+class Mp3DownloadView(BaseDownloadView):
+    recording_ext = '.mp3'
+
+
+class OggDownloadView(BaseDownloadView):
+    recording_ext = '.ogg'
 
 
 class Originate(CsrfExemptMixin, View, JSONResponseMixin):

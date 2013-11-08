@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 import datetime
+from os.path import join
 
 from django.db import models
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from model_utils import Choices
-from model_utils.fields import StatusField
 
 
 class CallDataRecord(models.Model):
@@ -50,8 +51,13 @@ class CallDataRecord(models.Model):
     def is_answered(self):
         return self.disposition == self.DISPOSITION.answered
 
-    def get_media_path(self):
+    def get_media_url(self):
         return u'/files/{0:%Y/%m/%d}/{1}'.format(self.start, self.recording_file[:-4])
+
+    def get_media_path(self):
+        return join(settings.MONITOR_ROOT, '{0:%Y}'.format(self.start),
+                    '{0:%m}'.format(self.start), '{0:%d}'.format(self.start),
+                    self.recording_file[:-4])
 
 
 class ExternalCall(models.Model):

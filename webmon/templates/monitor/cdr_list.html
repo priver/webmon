@@ -26,8 +26,8 @@
               <td><span class="label label-{% if cdr.is_answered %}success{% else %}danger{% endif %}">{{ cdr.get_disposition_display }}</span></td>
               <td>
                 <button class="btn btn-primary btn-xs player-start"
-                        data-oga="{{ cdr.get_media_path }}.ogg"
-                        data-mp3="{{ cdr.get_media_path }}.mp3">
+                        data-oga="{{ cdr.get_media_url }}.ogg"
+                        data-mp3="{{ cdr.get_media_url }}.mp3">
                   <i class="glyphicon glyphicon-play"></i>
                 </button>
                 <div class="player-control hide" style="display: inline">
@@ -42,8 +42,8 @@
                   </a>
                 </div>
                 <span class="pull-right">
-                  <a href="{{ cdr.get_media_path }}.mp3" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-download"></i> mp3</a>
-                  <a href="{{ cdr.get_media_path }}.ogg" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-download"></i> ogg</a>
+                  <a href="{{ cdr.get_media_url }}.mp3" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-download"></i> mp3</a>
+                  <a href="{{ cdr.get_media_url }}.ogg" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-download"></i> ogg</a>
                 </span>
               </td>
               <td class="text-right">
@@ -115,6 +115,12 @@
           </form>
         </div>
       </div>
+      {% if call_data_records %}
+        <div>
+          <a href="{% url 'download_mp3' %}{% if request.GET %}?{{ request.GET.urlencode }}{% endif %}" class="btn btn-default btn-block"><i class="glyphicon glyphicon-download"></i> Скачать все (mp3)</a>
+          <a href="{% url 'download_ogg' %}{% if request.GET %}?{{ request.GET.urlencode }}{% endif %}" class="btn btn-default btn-block"><i class="glyphicon glyphicon-download"></i> Скачать все (ogg)</a>
+        </div>
+      {% endif %}
     </div>
   </div>
 {% endblock content %}
