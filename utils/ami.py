@@ -52,24 +52,27 @@ def update(cursor, channel, status, unique_id):
 
 
 def handle_bridge(event, manager):
+    bridge_state = event.get_header('Bridgestate', '')
     unique_id = event.get_header('Uniqueid1', '')
     channel = event.get_header('Channel1', '')
     extension = event.get_header('CallerID2', '')
-    logging.debug('Received "Bridge": UniqueID: {0}, Channel: {1}, CallerID: {2}'.format(
-        unique_id, channel, extension))
-    try:
-        channel = CHANNEL_EXP.match(channel).group(1)
-    except AttributeError:
-        pass
-    else:
-        connection = get_db_connection(*manager.db)
-        with connection:
-            connection.autocommit(True)
-            cursor = connection.cursor()
-            row = select(cursor, channel)
-            if row is not None and row['status'] == 0 and row['extension'] == extension:
-                update(cursor, channel, 1, unique_id)
-        cursor.close()
+    logging.debug('Received "Bridge": '
+                  'State: {0}, UniqueID: {1}, Channel: {2}, CallerID: {3}'.format(
+                      bridge_state, unique_id, channel, extension))
+    if bridge_state == 'Link':
+        try:
+            channel = CHANNEL_EXP.match(channel).group(1)
+        except AttributeError:
+            pass
+        else:
+            connection = get_db_connection(*manager.db)
+            with connection:
+                connection.autocommit(True)
+                cursor = connection.cursor()
+                row = select(cursor, channel)
+                if row is not None and row['status'] == 0 and row['extension'] == extension:
+                    update(cursor, channel, 1, unique_id)
+            cursor.close()
 
 
 def handle_hangup(event, manager):
