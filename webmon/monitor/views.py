@@ -23,7 +23,7 @@ class Originate(CsrfExemptMixin, View, JSONResponseMixin):
         try:
             login = request.POST['login']
             password = request.POST['password']
-            channel = 'SIP/{0}'.format(request.POST['channel'])
+            channel = request.POST['channel']
             extension = request.POST['extension']
         except KeyError:
             return self.render_json_response({'success': False,  'message': 'Invalid parameters'})
@@ -32,7 +32,8 @@ class Originate(CsrfExemptMixin, View, JSONResponseMixin):
             try:
                 manager.connect('127.0.0.1')
                 manager.login(login, password)
-                event = manager.originate(channel, extension, 'from-internal', 1, async=True)
+                event = manager.originate('SIP/{0}'.format(channel), extension, 'from-internal', 1,
+                                          async=True)
                 manager.logoff()
                 manager.close()
             except asterisk.manager.ManagerSocketException as (errno, reason):
