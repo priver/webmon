@@ -45,8 +45,8 @@ def select(cursor, channel):
 
 def update(cursor, channel, status, unique_id):
     try:
-        cursor.execute("UPDATE `monitor_externalcall` SET `status`='{1}', `unique_id`='{2}' "
-                       "WHERE `channel`='{3}'".format(status, unique_id, channel))
+        cursor.execute("UPDATE `monitor_externalcall` SET `status`='{0}', `unique_id`='{1}' "
+                       "WHERE `channel`='{2}'".format(status, unique_id, channel))
     except MySQLdb.Error as e:
         logging.error('Database error: {0}'.format(e))
 
