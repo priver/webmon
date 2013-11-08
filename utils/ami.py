@@ -95,7 +95,7 @@ def handle_hangup(event, manager):
 
 
 def handle_shutdown(event, manager):
-    logging.warning('Received shutdown event: {0}'.format(event))
+    logging.warning('Received shutdown event: {0}'.format(event.get_header('Shutdown', 'Unknown')))
     manager.close()
 
 
