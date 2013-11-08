@@ -89,7 +89,7 @@ def handle_hangup(event, manager):
             connection.autocommit(True)
             cursor = connection.cursor()
             row = select(cursor, channel)
-            if row is not None:
+            if row is not None and row['status'] != 2:
                 update(cursor, channel, 2, '')
         cursor.close()
 
