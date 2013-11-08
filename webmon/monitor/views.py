@@ -29,25 +29,42 @@ class Originate(CsrfExemptMixin, View, JSONResponseMixin):
             return self.render_json_response({'success': False,  'message': 'Invalid parameters'})
         else:
             manager = asterisk.manager.Manager()
-            manager.connect('127.0.0.1')
-            manager.login(login, password)
-            event = manager.originate(channel, extension, 'from-internal', 1, async=True)
-            manager.logoff()
-            manager.close()
-            if event.has_header('Response') and event['Response'] == 'Success':
-                call, created = ExternalCall.objects.get_or_create(
-                    channel=channel, defaults={'extension': extension})
-                if not created:
-                    call.extension = extension
-                    call.unique_id = ''
-                    call.status = ExternalCall.STATUS.originate
-                    call.save()
-                return self.render_json_response({
-                    'success': True,
-                    'message': event.get_header('Message', ''),
-                })
-            else:
+            try:
+                manager.connect('127.0.0.1')
+                manager.login(login, password)
+                event = manager.originate(channel, extension, 'from-internal', 1, async=True)
+                manager.logoff()
+                manager.close()
+            except asterisk.manager.ManagerSocketException as (errno, reason):
                 return self.render_json_response({
                     'success': False,
-                    'message': event.get_header('Message', ''),
+                    'message': 'Error connecting to the manager: {0}'.format(reason),
                 })
+            except asterisk.manager.ManagerAuthException as reason:
+                return self.render_json_response({
+                    'success': False,
+                    'message': 'Error logging in to the manager: {0}'.format(reason),
+                })
+            except asterisk.manager.ManagerException as reason:
+                return self.render_json_response({
+                    'success': False,
+                    'message': 'Error: {0}'.format(reason),
+                })
+            else:
+                if event.has_header('Response') and event['Response'] == 'Success':
+                    call, created = ExternalCall.objects.get_or_create(
+                        channel=channel, defaults={'extension': extension})
+                    if not created:
+                        call.extension = extension
+                        call.unique_id = ''
+                        call.status = ExternalCall.STATUS.originate
+                        call.save()
+                    return self.render_json_response({
+                        'success': True,
+                        'message': event.get_header('Message', ''),
+                    })
+                else:
+                    return self.render_json_response({
+                        'success': False,
+                        'message': event.get_header('Message', ''),
+                    })
