@@ -43,10 +43,13 @@ def select(cursor, channel):
         return row
 
 
-def update(cursor, channel, status, unique_id):
+def update(cursor, channel, status, unique_id=None):
+    fields = ["`status`='{0}'".format(status), ]
+    if unique_id is not None:
+        fields.append("`unique_id`='{0}'".format(unique_id))
     try:
-        cursor.execute("UPDATE `monitor_externalcall` SET `status`='{0}', `unique_id`='{1}' "
-                       "WHERE `channel`='{2}'".format(status, unique_id, channel))
+        cursor.execute("UPDATE `monitor_externalcall` SET {0} WHERE `channel`='{1}'".format(
+            ', '.join(fields), channel))
     except MySQLdb.Error as e:
         logging.error('Database error: {0}'.format(e))
 
@@ -90,7 +93,7 @@ def handle_hangup(event, manager):
             cursor = connection.cursor()
             row = select(cursor, channel)
             if row is not None and row['status'] != 2:
-                update(cursor, channel, 2, '')
+                update(cursor, channel, 2)
         cursor.close()
 
 
