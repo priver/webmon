@@ -44,6 +44,7 @@ class BaseDownloadView(LoginRequiredMixin, BaseFilterView):
 
             response = HttpResponse(mimetype='application/zip')
             response['Content-Disposition'] = 'attachment; filename=recordings.zip'
+            response['Content-Length'] = f.tell()
 
             f.seek(0)
             response.write(f.read())
