@@ -77,8 +77,6 @@ class Originate(CsrfExemptMixin, View, JSONResponseMixin):
                 manager.login(login, password)
                 event = manager.originate('SIP/{0}'.format(channel), extension, 'from-internal', 1,
                                           async=True)
-                manager.logoff()
-                manager.close()
             except asterisk.manager.ManagerSocketException as (errno, reason):
                 return self.render_json_response({
                     'success': False,
@@ -112,3 +110,5 @@ class Originate(CsrfExemptMixin, View, JSONResponseMixin):
                         'success': False,
                         'message': event.get_header('Message', ''),
                     })
+            finally:
+                manager.close()

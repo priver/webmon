@@ -69,13 +69,14 @@ def handle_bridge(event, manager):
             pass
         else:
             connection = get_db_connection(*manager.db)
-            with connection:
-                connection.autocommit(True)
-                cursor = connection.cursor()
-                row = select(cursor, channel)
-                if row is not None and row['status'] == 0 and row['extension'] == extension:
-                    update(cursor, channel, 1, unique_id)
-            cursor.close()
+            if connection is not None:
+                with connection:
+                    connection.autocommit(True)
+                    cursor = connection.cursor()
+                    row = select(cursor, channel)
+                    if row is not None and row['status'] == 0 and row['extension'] == extension:
+                        update(cursor, channel, 1, unique_id)
+                    cursor.close()
 
 
 def handle_hangup(event, manager):
@@ -88,13 +89,14 @@ def handle_hangup(event, manager):
         pass
     else:
         connection = get_db_connection(*manager.db)
-        with connection:
-            connection.autocommit(True)
-            cursor = connection.cursor()
-            row = select(cursor, channel)
-            if row is not None and row['status'] != 2:
-                update(cursor, channel, 2)
-        cursor.close()
+        if connection is not None:
+            with connection:
+                connection.autocommit(True)
+                cursor = connection.cursor()
+                row = select(cursor, channel)
+                if row is not None and row['status'] != 2:
+                    update(cursor, channel, 2)
+                cursor.close()
 
 
 def handle_shutdown(event, manager):
